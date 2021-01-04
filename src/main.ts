@@ -3,11 +3,14 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as helmet from 'helmet';
 import * as rateLimit from 'express-rate-limit';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
 
   app.use(helmet());
+
+  app.setGlobalPrefix('api/v1');
 
   app.use(
     rateLimit({
@@ -16,10 +19,17 @@ async function bootstrap() {
     })
   );
 
+  app.useGlobalPipes(new ValidationPipe({
+    skipMissingProperties: true,
+    forbidNonWhitelisted: true,
+    whitelist: true,
+    transform: true
+  }));
+
   const options = new DocumentBuilder()
     .setTitle('Campaign Service')
     .setDescription('The campaign service API documentation')
-    .setVersion('1.0')
+    .setVersion('1.0.0')
     .addTag('campaigns')
     .build();
   const document = SwaggerModule.createDocument(app, options);

@@ -1,12 +1,21 @@
 import { ObjectId } from "mongodb";
 import { prop } from '@typegoose/typegoose';
-import { Candidate } from "./candidate";
+
+class CampaignCandidate {
+    _id: ObjectId;
+
+    @prop({ required: true })
+    name: string;
+
+    @prop({ default: 0 })
+    voteCnt: number = 0;
+}
 
 export class Campaign {
     _id: ObjectId;
 
     @prop({ required: true })
-    title: String;
+    title: string;
 
     @prop({ required: true })
     startAt: Date;
@@ -14,6 +23,6 @@ export class Campaign {
     @prop({ required: true })
     endAt: Date;
 
-    @prop({ type: [Candidate], required: true })
-    candidates: Candidate[]
+    @prop({ type: [CampaignCandidate], required: true })
+    candidates: CampaignCandidate[]
 }

@@ -1,4 +1,7 @@
-import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { ApiResponse } from '@nestjs/swagger';
+import { CampaignDto } from '../dtos/campaign-dto';
+import { CreateCampaignDto } from '../dtos/create-campaign-dto';
 import { CampaignsService } from '../services/campaigns.service';
 
 @Controller('campaigns')
@@ -8,8 +11,9 @@ export class CampaignsController {
     ) { }
 
     @Post()
-    async createCampaign(): Promise<any> {
-        return;
+    @ApiResponse({ status: 201, description: 'Creates new campaign.', type: CampaignDto })
+    async createCampaign(@Body() createCampaignDto: CreateCampaignDto): Promise<CampaignDto> {
+        return this.campaignsService.createCampaign(createCampaignDto);
     }
 
     @Put()
