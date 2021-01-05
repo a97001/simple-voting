@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform, Type } from "class-transformer";
 import { IsDate, IsDefined, Validate, ValidateNested } from "class-validator";
-import { IsBefore } from "src/shared/custom-validators/is-before";
 import xss from 'xss';
+import { IsBefore } from "../../shared/custom-validators/is-before";
 
 class CreateCampaignCandidateDto {
     @ApiProperty()

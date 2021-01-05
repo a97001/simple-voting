@@ -1,4 +1,30 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/campaign-service/src",
+  "monorepo": true,
+  "root": "apps/campaign-service",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/campaign-service/tsconfig.app.json"
+  },
+  "projects": {
+    "campaign-service": {
+      "type": "application",
+      "root": "apps/campaign-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/campaign-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/campaign-service/tsconfig.app.json"
+      }
+    },
+    "vote-service": {
+      "type": "application",
+      "root": "apps/vote-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/vote-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/vote-service/tsconfig.app.json"
+      }
+    }
+  }
 }
