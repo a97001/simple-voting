@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
+import { CampaignListDto } from '../dtos/campaign-list-dto';
 import { CreateCampaignDto } from '../dtos/create-campaign-dto';
 import { Campaign } from '../models/campaign';
 
@@ -21,4 +22,8 @@ export class CampaignsRepository {
 
     // public async deleteCampaign(campaign: Campaign): Promise<Campaign> {
     // }
+
+    public async getCampaignList(): Promise<CampaignListDto> {
+        const result = await this.campaignModel.pag
+    }
 }

@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CampaignDto } from '../dtos/campaign-dto';
 import { CreateCampaignDto } from '../dtos/create-campaign-dto';
 import { CampaignsService } from '../services/campaigns.service';
 
+@ApiTags('campaigns')
 @Controller('campaigns')
 export class CampaignsController {
     constructor(

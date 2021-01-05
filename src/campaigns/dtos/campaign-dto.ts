@@ -27,4 +27,7 @@ export class CampaignDto {
 
     @ApiResponseProperty({ type: [CampaignCandidateDto] })
     candidates: CampaignCandidateDto[]
+
+    @ApiResponseProperty()
+    totalVoteCnt: number;
 }

@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
-import { prop } from '@typegoose/typegoose';
+import { plugin, prop } from '@typegoose/typegoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 class CampaignCandidate {
     _id: ObjectId;
@@ -11,6 +12,7 @@ class CampaignCandidate {
     voteCnt: number = 0;
 }
 
+@plugin(mongoosePaginate)
 export class Campaign {
     _id: ObjectId;
 
@@ -25,4 +27,7 @@ export class Campaign {
 
     @prop({ type: [CampaignCandidate], required: true })
     candidates: CampaignCandidate[]
+
+    @prop({ default: 0 })
+    totalVoteCnt: number = 0;
 }
