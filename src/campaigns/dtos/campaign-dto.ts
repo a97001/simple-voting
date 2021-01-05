@@ -1,4 +1,5 @@
 import { ApiResponseProperty } from "@nestjs/swagger";
+import { Exclude } from "class-transformer";
 import { ObjectId } from "mongodb";
 
 class CampaignCandidateDto {
@@ -25,9 +26,18 @@ export class CampaignDto {
     @ApiResponseProperty()
     endAt: Date;
 
+    @ApiResponseProperty()
+    updatedAt: Date;
+
+    @ApiResponseProperty()
+    createdAt: Date;
+
     @ApiResponseProperty({ type: [CampaignCandidateDto] })
     candidates: CampaignCandidateDto[]
 
     @ApiResponseProperty()
     totalVoteCnt: number;
+
+    @Exclude()
+    __v: number
 }

@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
-import { plugin, prop } from '@typegoose/typegoose';
-import mongoosePaginate from 'mongoose-paginate-v2';
+import { prop } from '@typegoose/typegoose';
+import { PaginatedModel, PaginateMethod } from "./paginated-model";
 
 class CampaignCandidate {
     _id: ObjectId;
@@ -12,8 +12,7 @@ class CampaignCandidate {
     voteCnt: number = 0;
 }
 
-@plugin(mongoosePaginate)
-export class Campaign {
+export class Campaign extends PaginatedModel {
     _id: ObjectId;
 
     @prop({ required: true })
@@ -25,9 +24,17 @@ export class Campaign {
     @prop({ required: true })
     endAt: Date;
 
+    createdAt: Date;
+
+    updatedAt: Date;
+
     @prop({ type: [CampaignCandidate], required: true })
     candidates: CampaignCandidate[]
 
     @prop({ default: 0 })
     totalVoteCnt: number = 0;
+
+    __v: number;
+
+    static paginate: PaginateMethod<Campaign>
 }

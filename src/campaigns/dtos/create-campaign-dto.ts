@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Transform } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import { IsDate, IsDefined, Validate, ValidateNested } from "class-validator";
 import { IsBefore } from "src/shared/custom-validators/is-before";
 import xss from 'xss';
@@ -21,15 +21,18 @@ export class CreateCampaignDto {
     @IsDefined()
     @IsDate()
     @Validate(IsBefore, ['endDate'])
+    @Type(() => Date)
     startAt: Date;
 
     @ApiProperty()
     @IsDefined()
     @IsDate()
+    @Type(() => Date)
     endAt: Date;
 
     @ApiProperty({ type: [CreateCampaignCandidateDto] })
     @IsDefined()
     @ValidateNested()
+    @Type(() => CreateCampaignCandidateDto)
     candidates: CreateCampaignCandidateDto[]
 }
