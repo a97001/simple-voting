@@ -1,11 +1,11 @@
 import { BadRequestException, Body, Controller, Delete, Get, HttpCode, NotFoundException, Param, Post, Put } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CampaignDto } from '../dtos/campaign-dto';
-import { CampaignListDto } from '../dtos/campaign-list-dto';
-import { CreateCampaignDto } from '../dtos/create-campaign-dto';
 import { CampaignsService } from '../services/campaigns.service';
 import { ObjectId } from 'mongodb';
 import { isValidObjectId } from 'mongoose';
+import { CampaignDto } from 'apps/campaign-service/src/campaigns/dtos/campaign-dto';
+import { CampaignListDto } from 'apps/campaign-service/src/campaigns/dtos/campaign-list-dto';
+import { CreateCampaignDto } from 'apps/campaign-service/src/campaigns/dtos/create-campaign-dto';
 
 @ApiTags('campaigns')
 @Controller('campaigns')

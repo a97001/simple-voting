@@ -3,7 +3,6 @@ import { Transform } from "class-transformer";
 import { IsDefined, IsMongoId, Validate } from "class-validator";
 import validid from 'validid';
 import { IsHkid } from "../../shared/custom-validators/is-hkid";
-import crypto from 'crypto';
 
 export class CreateVoteDto {
     @ApiProperty()
@@ -14,11 +13,11 @@ export class CreateVoteDto {
     @ApiProperty()
     @IsDefined()
     @IsMongoId()
-    candidatesId: Date;
+    candidateId: string;
 
     @ApiProperty()
     @IsDefined()
     @Validate(IsHkid)
-    @Transform(s => crypto.createHash('sha256').update(validid.normalize(s)).digest('base64'))
+    @Transform(s => validid.utils.normalize(s))
     hkid: string;
 }

@@ -1,17 +1,27 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { CampaignDto } from 'apps/campaign-service/src/campaigns/dtos/campaign-dto';
-import { CreateVoteDto } from '../dtos/create-vote-dto';
+import { CreateVoteDto } from 'apps/vote-service/src/votes/dtos/create-vote-dto';
+import { VoteDto } from 'apps/vote-service/src/votes/dtos/vote-dto';
+import { CampaignsService } from '../../campaigns/services/campaigns.service';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class VotesService {
     constructor(
         @Inject('VOTE_SERVICE') private client: ClientProxy,
+        private readonly campaignsService: CampaignsService
     ) { }
 
-    public async createVote(createVoteDto: CreateVoteDto): Promise<CampaignDto> {
-        const result = await this.client.send<CreateVoteDto>({ cmd: 'createVote' }, createVoteDto).toPromise();
-        console.log(result);
-        return this.client.send<CampaignDto>({ cmd: 'getCampaign' }, createVoteDto.campaignId).toPromise();
+    public async createVote(createVoteDto: CreateVoteDto): Promise<VoteDto> {
+        const campaign = await this.campaignsService.getCampaign(new ObjectId(createVoteDto.campaignId));
+        if (campaign && campaign.candidates.find(c => c._id.toString() === createVoteDto.candidateId)) {
+            try {
+                const result = await this.client.send<VoteDto>({ cmd: 'createVote' }, createVoteDto).toPromise();
+                return result;
+            } catch (err) {
+                throw new HttpException(err, err.statusCode);
+            }
+        }
+        throw new BadRequestException(["Invalid campaignId or candidateId"]);
     }
 }

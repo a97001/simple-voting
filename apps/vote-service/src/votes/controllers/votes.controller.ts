@@ -1,14 +1,18 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
-import { CampaignDto } from 'apps/campaign-service/src/campaigns/dtos/campaign-dto';
-import { CreateCampaignDto } from 'apps/campaign-service/src/campaigns/dtos/create-campaign-dto';
 import { CreateVoteDto } from '../dtos/create-vote-dto';
+import { VoteDto } from '../dtos/vote-dto';
+import { VotesService } from '../services/votes.service';
 
 @Controller()
 export class VotesController {
+    constructor(
+        private readonly votesService: VotesService
+    ) {}
+
     @MessagePattern({ cmd: 'createVote' })
-    async createVote(createVoteDto: CreateVoteDto): Promise<void> {
-        // return this.campaignsService.createCampaign(createCampaignDto);
+    async createVote(createVoteDto: CreateVoteDto): Promise<VoteDto> {
+        const vote = await this.votesService.createVote(createVoteDto);
+        return vote.toDto();
     }
 }

@@ -1,9 +1,9 @@
 import { Inject, Injectable, OnApplicationBootstrap } from '@nestjs/common';
-import { CampaignDto } from '../dtos/campaign-dto';
-import { CampaignListDto } from '../dtos/campaign-list-dto';
-import { CreateCampaignDto } from '../dtos/create-campaign-dto';
 import { ObjectId } from 'mongodb';
 import { ClientProxy } from '@nestjs/microservices';
+import { CampaignDto } from 'apps/campaign-service/src/campaigns/dtos/campaign-dto';
+import { CampaignListDto } from 'apps/campaign-service/src/campaigns/dtos/campaign-list-dto';
+import { CreateCampaignDto } from 'apps/campaign-service/src/campaigns/dtos/create-campaign-dto';
 
 @Injectable()
 export class CampaignsService implements OnApplicationBootstrap {

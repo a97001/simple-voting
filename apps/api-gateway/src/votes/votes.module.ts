@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
+import { CampaignsModule } from '../campaigns/campaigns.module';
 import { VotesController } from './controllers/votes.controller';
 import { VotesService } from './services/votes.service';
 
 @Module({
   imports: [
+    CampaignsModule
   ],
   controllers: [VotesController],
   providers: [

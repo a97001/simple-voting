@@ -10,10 +10,6 @@ import { VotesModule } from './votes/votes.module';
 
 @Module({
   imports: [
-    // ClientsModule.register([
-    //   { name: 'CAMPAIGN_SERVICE', transport: Transport.TCP, options: { port: 3001 } },
-    //   { name: 'VOTE_SERVICE', transport: Transport.TCP, options: { port: 3002 } },
-    // ]),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [() => envParse(readdirSync('env').map(path => readFileSync(`env/${path}`, 'utf8')).join('\n'))]

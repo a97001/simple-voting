@@ -24,7 +24,8 @@ import { parse as envParse } from 'dotenv';
         ssl: configService.get<boolean>('ENV_MONGODB_SSL') === true || configService.get<string>('ENV_MONGODB_SSL') === 'true' ? true : false,
         useCreateIndex: true,
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
       }),
       inject: [ConfigService],
     }),

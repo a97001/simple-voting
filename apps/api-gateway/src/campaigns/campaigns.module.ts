@@ -15,8 +15,11 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
         // const mathSvcOptions = configService.get();
         return ClientProxyFactory.create({ transport: Transport.TCP, options: { port: 3001 } });
       },
-      inject: [ConfigService],
+      inject: [ConfigService]
     },
+    CampaignsService
+  ],
+  exports: [
     CampaignsService
   ]
 })
