@@ -6,18 +6,16 @@ import { CreateCampaignDto } from '../dtos/create-campaign-dto';
 import { CampaignsService } from '../services/campaigns.service';
 import { ObjectId } from 'mongodb';
 import { isValidObjectId } from 'mongoose';
+import { MessagePattern } from '@nestjs/microservices';
 
-@ApiTags('campaigns')
-@Controller('campaigns')
-@ApiResponse({ status: 400, description: 'Request contains invalid parameters' })
+@Controller()
 export class CampaignsController {
     constructor(
         private readonly campaignsService: CampaignsService
     ) { }
 
-    @Post()
-    @ApiResponse({ status: 201, description: 'Creates new campaign.', type: CampaignDto })
-    async createCampaign(@Body() createCampaignDto: CreateCampaignDto): Promise<CampaignDto> {
+    @MessagePattern({ cmd: 'createCampaign' })
+    async createCampaign(createCampaignDto: CreateCampaignDto): Promise<CampaignDto> {
         return this.campaignsService.createCampaign(createCampaignDto);
     }
 
@@ -26,36 +24,28 @@ export class CampaignsController {
     //     return;
     // }
 
-    @Delete(':id')
-    @HttpCode(204)
-    @ApiResponse({ status: 204, description: 'Delete campaign.' })
-    @ApiResponse({ status: 404, description: 'Reqested data not found.' })
-    async deleteCampaign(@Param('id') id: string): Promise<void> {
-        if (!isValidObjectId(id)) {
-            throw new BadRequestException(['Invalid id on url']);
-        }
+    @MessagePattern({ cmd: 'deleteCampaign' })
+    async deleteCampaign(id: string): Promise<CampaignDto> {
+        // if (!isValidObjectId(id)) {
+        //     throw new BadRequestException(['Invalid id on url']);
+        // }
         const campaign = await this.campaignsService.deleteCampaign(new ObjectId(id));
-        if (!campaign) {
-            throw new NotFoundException();
-        }
-    }
-
-    @Get(':id')
-    @ApiResponse({ status: 200, description: 'Get campaign.', type: CampaignDto })
-    @ApiResponse({ status: 404, description: 'Reqested data not found.' })
-    async getCampaign(@Param('id') id: string): Promise<any> {
-        if (!isValidObjectId(id)) {
-            throw new BadRequestException(['Invalid id on url']);
-        }
-        const campaign = await this.campaignsService.getCampaign(new ObjectId(id));
-        if (!campaign) {
-            throw new NotFoundException();
-        }
         return campaign;
     }
 
-    @Get()
-    @ApiResponse({ status: 200, description: 'Get campaign list.', type: CampaignListDto })
+    @MessagePattern({ cmd: 'getCampaign' })
+    async getCampaign(id: string): Promise<CampaignDto> {
+        // if (!isValidObjectId(id)) {
+        //     throw new BadRequestException(['Invalid id on url']);
+        // }
+        const campaign = await this.campaignsService.getCampaign(new ObjectId(id));
+        // if (!campaign) {
+        //     throw new NotFoundException();
+        // }
+        return campaign;
+    }
+
+    @MessagePattern({ cmd: 'getCampaignList' })
     async getCampaignList(): Promise<CampaignListDto> {
         return this.campaignsService.getCampaignList();
     }
