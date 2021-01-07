@@ -20,7 +20,7 @@ export class CreateCampaignDto {
     @ApiProperty()
     @IsDefined()
     @IsDate()
-    @Validate(IsBefore, ['endDate'])
+    @Validate(IsBefore, ['endAt'])
     @Type(() => Date)
     startAt: Date;
 

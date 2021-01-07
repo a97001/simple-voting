@@ -35,7 +35,7 @@ export class CampaignsService implements OnApplicationBootstrap {
         return this.campaignsRepository.getCampaignList();
     }
 
-    public streamObjToVote(obj: any): VoteDto {
+    private streamObjToVote(obj: any): VoteDto {
         return plainToClass(VoteDto, {
             campaignId: obj.campaignId.$oid,
             candidateId: obj.candidateId.$oid,
@@ -43,7 +43,27 @@ export class CampaignsService implements OnApplicationBootstrap {
         });
     }
 
-    public async onApplicationBootstrap(): Promise<void> {
+    private async initVoteStream(): Promise<void> {
+        const client = rdkafka.AdminClient.create({
+            'client.id': 'VOTE_SERVICE',
+            'metadata.broker.list': this.configService.get('ENV_KAFKA_BROKERS')
+        });
+        await new Promise((resolve) => {
+            client.createTopic({
+                topic: 'mongo.development.votes',
+                num_partitions: 1,
+                replication_factor: 1
+            }, () => {
+                console.log('create stream');
+                this.runVoteStream();
+                resolve(true);
+            });
+        });
+        client.disconnect();
+    }
+
+    private runVoteStream(): void {
+        console.log('run stream');
         this.voteStream = rdkafka.KafkaConsumer.createReadStream({
             'group.id': 'VOTE_SERVICE',
             'metadata.broker.list': this.configService.get('ENV_KAFKA_BROKERS')
@@ -52,9 +72,13 @@ export class CampaignsService implements OnApplicationBootstrap {
         });
 
         this.voteStream.on('data', async (message) => {
-            console.log('Got message');
             const payload = JSON.parse(JSON.parse(message.value.toString()).payload);
             await this.campaignsRepository.updateCampaignVoteCnt(this.streamObjToVote(payload));
         });
+    }
+
+    public async onApplicationBootstrap(): Promise<void> {
+        await this.initVoteStream();
+        
     }
 }
