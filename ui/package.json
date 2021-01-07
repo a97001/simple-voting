@@ -9,6 +9,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@windmill/react-ui": "^0.5.0",
     "gatsby": "2.25.1",
     "gatsby-plugin-manifest": "2.8.0",
     "gatsby-plugin-offline": "3.7.1",

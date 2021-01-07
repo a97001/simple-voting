@@ -1,58 +1,58 @@
 import React from "react";
 import DataTable from 'react-data-table-component';
-// import CandidateListComponent from "../components/candidate-list";
-// createTheme('solarized', {
-//     text: {
-//         primary: '#268bd2',
-//         secondary: '#2aa198',
-//     },
-//     background: {
-//         default: '#002b36',
-//     },
-//     context: {
-//         background: '#cb4b16',
-//         text: '#FFFFFF',
-//     },
-//     divider: {
-//         default: '#073642',
-//     },
-//     action: {
-//         button: 'rgba(0,0,0,.54)',
-//         hover: 'rgba(0,0,0,.08)',
-//         disabled: 'rgba(0,0,0,.12)',
-//     },
-// });
+import CandidateListComponent from "../components/candidate-list";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faVoteYea } from '@fortawesome/free-solid-svg-icons'
 
 const data = [
-    { _id: 1, title: 'Conan the Barbarian', startAt: new Date(), endAt: new Date(), totalVoteCnt: 0, candidates: [{ name: 'xxx', voteCnt: 0 }] },
-    { _id: 2, title: 'Conan the Barbarianwewe we', startAt: new Date(), endAt: new Date(), totalVoteCnt: 0, candidates: [{ name: 'xxx', voteCnt: 0 }, { name: 'yyy', voteCnt: 1 }] }
+    { _id: "1", title: 'Conan the Barbarian', startAt: new Date(), endAt: new Date(), totalVoteCnt: 0, candidates: [{ _id: "x", name: 'xxx', voteCnt: 0 }] },
+    { _id: "2", title: 'Conan the Barbarianwewe we', startAt: new Date(), endAt: new Date(2022, 1, 1), totalVoteCnt: 0, candidates: [{ _id: "x", name: 'xxx', voteCnt: 0 }, { _id: "y", name: 'yyy', voteCnt: 1 }] }
 ];
+
 const columns = [
     {
         name: 'Campaign Title',
         selector: 'title',
         sortable: false,
+        wrap: true
     },
     {
         name: 'Start Time',
         selector: 'startAt',
+        maxWidth: "170px",
         sortable: false,
-        format: (row) => new Intl.DateTimeFormat('en-GB', { dateStyle: 'long', timeStyle: 'medium' }).format(row.startAt)
+        format: (row) => new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeStyle: 'medium' }).format(row.startAt)
     },
     {
         name: 'End Time',
         selector: 'endAt',
+        maxWidth: "170px",
         sortable: false,
-        format: (row) => new Intl.DateTimeFormat('en-GB', { dateStyle: 'long', timeStyle: 'medium' }).format(row.endAt)
+        format: (row) => new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeStyle: 'medium' }).format(row.endAt)
     },
     {
-        name: 'Total vote',
-        selector: 'totalVoteCnt'
+        name: 'Total Vote',
+        selector: 'totalVoteCnt',
+        maxWidth: "200px",
     },
     {
-        name: 'Candidates',
-        // cell: (row) => {<CandidateListComponent candidates={row.candidates}></CandidateListComponent>}
-        format: (row) => {<h2>{row._id}</h2>}
+        name: 'Candidate Ranking',
+        maxWidth: "270px",
+        cell: function list(row) {
+            return (
+                <CandidateListComponent candidates={row.candidates}></CandidateListComponent>
+            );
+        }
+    },
+    {
+        name: '',
+        width: "45px",
+        cell: function vote(row) {
+            const now = Date.now();
+            if (row.startAt <= now && row.endAt > now) {
+                return (<div className="animate-bounce"><FontAwesomeIcon icon={faVoteYea} size="lg" /></div>);
+            }
+        }
     }
 ];
 
@@ -61,6 +61,7 @@ const CampaignListComponent = () => (
         title="Campaign List"
         columns={columns}
         data={data}
+        keyField="_id"
     />
 );
 
