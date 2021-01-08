@@ -65,7 +65,7 @@ ii. Display most recent ended campaign afterward
 
 2. Infrastructure
 
-    ![infra-chart](https://github.com/a97001/simple-voting/raw/dev/docs/simple-voting-arch.png)
+    ![infra-chart](https://raw.githubusercontent.com/a97001/simple-voting/main/docs/simple-voting-arch.png)
 
 ### Tech stack
 1. Backend Services: Nodejs + NestJS
