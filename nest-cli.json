@@ -1,0 +1,48 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/campaign-service/src",
+  "monorepo": true,
+  "root": "apps/campaign-service",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/campaign-service/tsconfig.app.json"
+  },
+  "projects": {
+    "campaign-service": {
+      "type": "application",
+      "root": "apps/campaign-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/campaign-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/campaign-service/tsconfig.app.json"
+      }
+    },
+    "vote-service": {
+      "type": "application",
+      "root": "apps/vote-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/vote-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/vote-service/tsconfig.app.json"
+      }
+    },
+    "cqrs": {
+      "type": "library",
+      "root": "libs/cqrs",
+      "entryFile": "index",
+      "sourceRoot": "libs/cqrs/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/cqrs/tsconfig.lib.json"
+      }
+    },
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    }
+  }
+}
