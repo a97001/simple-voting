@@ -11,7 +11,7 @@ function IndexPage() {
   let autoUpdate;
   useEffect(() => {
     fetchCampaignData();
-    autoUpdate = setInterval(fetchCampaignData, 1000);
+    autoUpdate = setInterval(fetchCampaignData, 1500);
     return () => {
       clearInterval(autoUpdate);
     }

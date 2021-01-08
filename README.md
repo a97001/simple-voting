@@ -78,7 +78,7 @@ ii. Display most recent ended campaign afterward
 1. docker
 2. docker-compose
 3. git
-4. port 8000 for web UI and port 5000 for API gateway
+4. port `8000` for web UI and port `5000` for API gateway
 
 ### installation guide
 Clone the project
