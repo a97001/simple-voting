@@ -82,7 +82,7 @@ ii. Display most recent ended campaign afterward
     * `8000` for web UI
     * `5000` for API gateway
 
-### installation guide
+### Installation guide
 ```bash
 
 # Clone the project
