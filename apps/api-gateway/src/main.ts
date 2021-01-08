@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 import { ApiGatewayModule } from './api-gateway.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ApiGatewayModule);
+  const app = await NestFactory.create(ApiGatewayModule, { cors: { credentials: true, origin: true, methods: ['POST', "GET", "DELETE"] } });
 
   app.use(helmet());
 

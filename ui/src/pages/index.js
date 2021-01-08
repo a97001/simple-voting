@@ -1,42 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CampaignListComponent from "../components/campaign-list";
 
 import Layout from "../components/layout";
-import SEO from "../components/seo";
-// import catAndHumanIllustration from "../images/cat-and-human-illustration.svg";
+import axios from "axios";
+
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 function IndexPage() {
+  const [campaignData, setCampaignData] = useState([]);
+  let autoUpdate;
+  useEffect(() => {
+    fetchCampaignData();
+    autoUpdate = setInterval(fetchCampaignData, 1000);
+    return () => {
+      clearInterval(autoUpdate);
+    }
+  }, []);
+
+  // useEffect(() => fetchCampaignData(), []);
+
+  async function fetchCampaignData() {
+    const result = await axios.get('http://localhost:5000/api/v1/campaigns');
+    console.log(result);
+    setCampaignData(result.data.docs.map(d => ({ ...d, startAt: new Date(d.startAt), endAt: new Date(d.endAt) })));
+  }
+
   return (
     <Layout>
-      <SEO
-        keywords={[`vote`, `campaign`]}
-        title="Home"
-      />
-
-      <section className="text-center">
-        <CampaignListComponent></CampaignListComponent>
-        {/* <img
-          alt="Cat and human sitting on a couch"
-          className="block w-1/2 mx-auto mb-8"
-          src={catAndHumanIllustration}
-        />
-
-        <h2 className="inline-block p-3 mb-4 text-2xl font-bold bg-yellow-400">
-          Hey there! Welcome to your first Gatsby site.
-        </h2>
-
-        <p className="leading-loose">
-          This is a barebones starter for Gatsby styled using{` `}
-          <a
-            className="font-bold text-gray-900 no-underline"
-            href="https://tailwindcss.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Tailwind CSS
-          </a>
-          , a utility-first CSS framework.
-        </p> */}
+      <section className="text-left">
+        <CampaignListComponent data={campaignData} fetchData={fetchCampaignData} view="user"></CampaignListComponent>
       </section>
     </Layout>
   );
