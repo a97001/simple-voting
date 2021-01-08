@@ -42,7 +42,7 @@ ii. Display most recent ended campaign afterward
             hkid: string;
         }
         ```
-        `* Addtional uniqe index: { campaignId: 1, hkid: 1 }`
+        `* Additional uniqe index: { campaignId: 1, hkid: 1 }`
 
     * campaigns collection
         ```ts
@@ -61,7 +61,7 @@ ii. Display most recent ended campaign afterward
             totalVoteCnt: number;
         }
         ```
-        `* Addtional index: { endAt: -1 , totalVoteCnt: -1 }`
+        `* Addition index: { endAt: -1 , totalVoteCnt: -1 }`
 
 2. Infrastructure
 
@@ -83,16 +83,23 @@ ii. Display most recent ended campaign afterward
     * `5000` for API gateway
 
 ### installation guide
-Clone the project
 ```bash
+
+# Clone the project
 git clone https://github.com/a97001/simple-voting.git
 
 cd simple-voting
 
+# Start all services
 docker-compose -f docker-compose.yml -f docker-compose.prod.yaml up -d
 ```
 
 Open [http://localhost:8000](http://localhost:8000) with browser after installation completed.
+
+```bash
+# Shutdown all services
+docker-compose -f docker-compose.yml -f docker-compose.prod.yaml down
+```
 
 ### API Documentation
 Visit [http://localhost:5000/api/](http://localhost:5000/api/) to access `Swagger API` document for open API format.
