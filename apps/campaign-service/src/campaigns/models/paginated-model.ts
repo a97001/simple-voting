@@ -2,6 +2,7 @@ import { plugin } from '@typegoose/typegoose';
 import { CollationOptions, QueryFindOptions, Model } from 'mongoose';
 import { FilterQuery } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
+import aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 
 interface CustomLabels {
     totalDocs?: string;
@@ -73,6 +74,8 @@ export type PaginateMethod<T> = (
 ) => Promise<PaginateResult<T>>;
 
 @plugin(mongoosePaginate)
+@plugin(aggregatePaginate)
 export abstract class PaginatedModel {
     static paginate: PaginateMethod<PaginatedModel>;
+    static aggregatePaginate: PaginateMethod<PaginatedModel>;
 }

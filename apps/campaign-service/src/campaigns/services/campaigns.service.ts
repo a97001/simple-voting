@@ -23,7 +23,7 @@ export class CampaignsService implements OnApplicationBootstrap {
         return this.campaignsRepository.createCampaign(createCampaignDto);
     }
 
-    public async deleteCampaign(id: ObjectId): Promise<Campaign> {
+    public async deleteCampaign(id: ObjectId): Promise<CampaignDto> {
         return this.campaignsRepository.deleteCampaign(id);
     }
 

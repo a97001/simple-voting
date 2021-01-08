@@ -20,9 +20,6 @@ export class CampaignsRepository {
         return campaignDoc;
     }
 
-    // public async updateCampaign(campaign: Campaign): Promise<Campaign> {
-    // }
-
     public async deleteCampaign(id: ObjectId): Promise<CampaignDto> {
         const result = await this.campaignModel.findByIdAndDelete(id).exec();
         return result;
@@ -34,8 +31,32 @@ export class CampaignsRepository {
     }
 
     public async getCampaignList(): Promise<CampaignListDto> {
-        const result = await this.campaignModel.paginate({});
-        return result;
+        const result = await this.campaignModel.aggregate([
+            {
+                $set: {
+                    serverTime: '$$NOW',
+                    isVoting: {
+                        $switch: {
+                            branches: [
+                                { case: { $and: [{ $gte: ['$$NOW', '$startAt'] }, { $lt: ['$$NOW', '$endAt'] }] }, then: true },
+                            ],
+                            default: false
+                        }
+                    }
+                }
+            },
+            { $sort: { isVoting: -1, totalVoteCnt: -1, endAt: -1 } }
+        ]);
+        return {
+            docs: result,
+            totalDocs: result.length,
+            page: 1,
+            pagingCounter: 1,
+            hasNextPage: false,
+            hasPrevPage: false,
+            limit: 10000,
+            totalPages: 1
+        };
     }
 
     public async updateCampaignVoteCnt(vote: VoteDto): Promise<CampaignDto> {

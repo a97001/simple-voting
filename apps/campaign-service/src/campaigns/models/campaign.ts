@@ -1,7 +1,6 @@
 import { ObjectId } from "mongodb";
 import { prop } from '@typegoose/typegoose';
 import { PaginatedModel, PaginateMethod } from "./paginated-model";
-import { CampaignDto } from "../dtos/campaign-dto";
 
 class CampaignCandidate {
     _id: ObjectId;
@@ -37,5 +36,10 @@ export class Campaign extends PaginatedModel {
 
     __v: number;
 
+    @prop({ default: false })
+    isVoting: boolean;
+
     static paginate: PaginateMethod<Campaign>;
+
+    static aggregatePaginate: PaginateMethod<Campaign>;
 }
