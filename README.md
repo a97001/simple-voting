@@ -1,7 +1,7 @@
 # Simple Voting
 
 ## Scenario
-Set up an online voting system for HK01 readers to express their opinions for news topics
+Set up an online voting system for users to express their opinions for news topics
 
 ### Functional Requirements:
 1. API interface for voting.
