@@ -32,40 +32,40 @@ ii. Display most recent ended campaign afterward
 
 ### System Design & Infrastructure
 1. Mongodb
-* votes collection
-```ts
-{
-    _id: ObjectId;
-    campaignId: ObjectId;
-    candidateId: ObjectId;
-    createdAt: Date;
-    hkid: string;
-}
-```
-`* Addtional uniqe index: { campaignId: 1, hkid: 1 }`
+    * votes collection
+        ```ts
+        {
+            _id: ObjectId;
+            campaignId: ObjectId;
+            candidateId: ObjectId;
+            createdAt: Date;
+            hkid: string;
+        }
+        ```
+        `* Addtional uniqe index: { campaignId: 1, hkid: 1 }`
 
-* campaigns collection
-```ts
-{
-    _id: ObjectId;
-    title: string;
-    startAt: Date;
-    endAt: Date;
-    createdAt: Date;
-    updatedAt: Date;
-    candidates: [{
-        _id: ObjectId;
-        name: string;
-        voteCnt: number;
-    }];
-    totalVoteCnt: number;
-}
-```
-`* Addtional index: { endAt: -1 , totalVoteCnt: -1 }`
+    * campaigns collection
+        ```ts
+        {
+            _id: ObjectId;
+            title: string;
+            startAt: Date;
+            endAt: Date;
+            createdAt: Date;
+            updatedAt: Date;
+            candidates: [{
+                _id: ObjectId;
+                name: string;
+                voteCnt: number;
+            }];
+            totalVoteCnt: number;
+        }
+        ```
+        `* Addtional index: { endAt: -1 , totalVoteCnt: -1 }`
 
 2. Infrastructure
 
-![infra-chart](./img/tinyurl-design-system-design.png?raw=true)
+    ![infra-chart](https://github.com/a97001/simple-voting/raw/dev/docs/simple-voting-arch.png)
 
 ### Tech stack
 1. Backend Services: Nodejs + NestJS
@@ -78,7 +78,9 @@ ii. Display most recent ended campaign afterward
 1. docker
 2. docker-compose
 3. git
-4. port `8000` for web UI and port `5000` for API gateway
+4. ports
+    * `8000` for web UI
+    * `5000` for API gateway
 
 ### installation guide
 Clone the project
@@ -96,6 +98,4 @@ Open [http://localhost:8000](http://localhost:8000) with browser after installat
 Visit [http://localhost:5000/api/](http://localhost:5000/api/) to access `Swagger API` document for open API format.
 
 ### Future Works
-1. Redis: find in cache first to increse get short link performance
-2. Zookeeper: Generating global unique ID in distributed cluster, this may increase writing performance
-3. Add link counter for further analysis
+1. Complete the unit test since time is limited.

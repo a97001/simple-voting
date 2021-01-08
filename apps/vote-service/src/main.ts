@@ -8,7 +8,7 @@ async function bootstrap() {
     VoteServiceModule,
     {
       transport: Transport.TCP,
-      options: { port: 3002 }
+      options: { port: 3002, host: 'vote-service' }
     },
   );
 
