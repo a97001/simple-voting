@@ -50,8 +50,8 @@ services:
     depends_on:
       - zookeeper
       - kafka
-    ports:
-      - "8083:8083"
+    # ports:
+    #   - "8083:8083"
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'kafka:29092'
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
