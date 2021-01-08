@@ -3,8 +3,8 @@ services:
   zookeeper:
     container_name: zookeeper
     image: "bitnami/zookeeper:3"
-    ports:
-      - "2181:2181"
+    # ports:
+    #   - "2181:2181"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
 
@@ -41,8 +41,8 @@ services:
       interval: 10s
       start_period: 30s
     command: ["--replSet", "rs0", "--bind_ip_all"]
-    ports:
-      - "27017:27017"
+    # ports:
+    #   - "27017:27017"
 
   connect:
     image: confluentinc/cp-kafka-connect:5.1.2
@@ -50,8 +50,8 @@ services:
     depends_on:
       - zookeeper
       - kafka
-    ports:
-      - "8083:8083"
+    # ports:
+    #   - "8083:8083"
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'kafka:29092'
       CONNECT_REST_ADVERTISED_HOST_NAME: connect

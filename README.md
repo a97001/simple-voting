@@ -1,7 +1,7 @@
 # Simple Voting
 
 ## Scenario
-Set up an online voting system for HK01 readers to express their opinions for news topics
+Set up an online voting system for users to express their opinions for news topics
 
 ### Functional Requirements:
 1. API interface for voting.
@@ -42,7 +42,7 @@ ii. Display most recent ended campaign afterward
             hkid: string;
         }
         ```
-        `* Addtional uniqe index: { campaignId: 1, hkid: 1 }`
+        `* Additional uniqe index: { campaignId: 1, hkid: 1 }`
 
     * campaigns collection
         ```ts
@@ -61,7 +61,7 @@ ii. Display most recent ended campaign afterward
             totalVoteCnt: number;
         }
         ```
-        `* Addtional index: { endAt: -1 , totalVoteCnt: -1 }`
+        `* Addition index: { endAt: -1 , totalVoteCnt: -1 }`
 
 2. Infrastructure
 
@@ -82,20 +82,28 @@ ii. Display most recent ended campaign afterward
     * `8000` for web UI
     * `5000` for API gateway
 
-### installation guide
-Clone the project
+### Installation guide
 ```bash
+
+# Clone the project
 git clone https://github.com/a97001/simple-voting.git
 
 cd simple-voting
 
+# Start all services
 docker-compose -f docker-compose.yml -f docker-compose.prod.yaml up -d
 ```
 
 Open [http://localhost:8000](http://localhost:8000) with browser after installation completed.
+
+```bash
+# Shutdown all services
+docker-compose -f docker-compose.yml -f docker-compose.prod.yaml down
+```
 
 ### API Documentation
 Visit [http://localhost:5000/api/](http://localhost:5000/api/) to access `Swagger API` document for open API format.
 
 ### Future Works
 1. Complete the unit test since time is limited.
+2. Complete data validation on front end.
