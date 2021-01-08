@@ -13,38 +13,31 @@ const CreateCampaignFormComponent = ({ fetchData }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     function addCandidate() {
-        console.log(candidateName);
         if (candidateName && !candidates.find(c => c.name === candidateName)) {
             candidates.push({ name: candidateName });
-            console.log('tttt');
             setCandidates(candidates);
             setCandidateName("");
-            console.log(candidates);
         }
     }
 
     function removeCandidate(idx) {
-        console.log('removeCandidate', idx)
         candidates.splice(idx, 1);
-        console.log('dddd');
         setCandidates([...candidates]);
-        console.log(candidates);
-
     }
 
     async function submit() {
         setIsSubmitting(true);
         console.log({
             title,
-            startAt,
-            endAt,
+            startAt: new Date(startAt.replace(/-/g, '/').replace('T', ' ')),
+            endAt: new Date(endAt.replace(/-/g, '/').replace('T', ' ')),
             candidates
         });
         try {
             await axios.post('http://localhost:5000/api/v1/campaigns', {
                 title,
-                startAt,
-                endAt,
+                startAt: new Date(startAt.replace(/-/g, '/').replace('T', ' ')),
+                endAt: new Date(endAt.replace(/-/g, '/').replace('T', ' ')),
                 candidates
             }, { withCredentials: true });
             setTitle('');

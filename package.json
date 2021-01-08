@@ -18,7 +18,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/campaign-service/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/campaign-service/test/jest-e2e.json",
+    "campaign-service": "nest start campapign-service",
+    "vote-service": "nest start campapign-service",
+    "api-gateway": "nest start api-gateway",
+    "production": "docker-compose -f docker-compose.yml -f docker-compose.prod.yaml up -d"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",

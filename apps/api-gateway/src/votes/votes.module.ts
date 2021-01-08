@@ -14,12 +14,17 @@ import { VotesService } from './services/votes.service';
     {
       provide: 'VOTE_SERVICE',
       useFactory: (configService: ConfigService) => {
-        // const mathSvcOptions = configService.get();
-        return ClientProxyFactory.create({ transport: Transport.TCP, options: { port: 3002 } });
+        return ClientProxyFactory.create({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get('ENV_VOTE_SERVICE_HOST'),
+            port: parseInt(configService.get('ENV_VOTE_SERVICE_PORT'))
+          }
+        });
       },
       inject: [ConfigService],
     },
     VotesService
   ]
 })
-export class VotesModule {}
+export class VotesModule { }

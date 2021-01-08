@@ -19,7 +19,6 @@ function IndexPage() {
 
   async function fetchCampaignData() {
     const result = await axios.get('http://localhost:5000/api/v1/campaigns');
-    console.log(result);
     setCampaignData(result.data.docs.map(d => ({ ...d, startAt: new Date(d.startAt), endAt: new Date(d.endAt) })));
   }
 

@@ -1,0 +1,17 @@
+version: "3.4"
+services:
+  kafkahq:
+    container_name: kafkahq
+    image: "tchiotludo/kafkahq"
+    ports:
+      - "18080:8080"
+    environment:
+      KAFKAHQ_CONFIGURATION: |
+        kafkahq:
+          connections:
+            docker-kafka-server:
+              properties:
+                bootstrap.servers: "kafka:29092"
+    depends_on:
+      - kafka
+      - zookeeper

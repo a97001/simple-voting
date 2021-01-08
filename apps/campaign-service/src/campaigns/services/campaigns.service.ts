@@ -54,7 +54,6 @@ export class CampaignsService implements OnApplicationBootstrap {
                 num_partitions: 1,
                 replication_factor: 1
             }, () => {
-                console.log('create stream');
                 this.runVoteStream();
                 resolve(true);
             });
@@ -63,7 +62,6 @@ export class CampaignsService implements OnApplicationBootstrap {
     }
 
     private runVoteStream(): void {
-        console.log('run stream');
         this.voteStream = rdkafka.KafkaConsumer.createReadStream({
             'group.id': 'VOTE_SERVICE',
             'metadata.broker.list': this.configService.get('ENV_KAFKA_BROKERS')

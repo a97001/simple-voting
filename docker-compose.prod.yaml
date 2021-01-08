@@ -1,0 +1,43 @@
+version: "3.4"
+services:
+  campaign-service:
+    build:
+      context: .
+      dockerfile: ./apps/campaign-service/Dockerfile
+    depends_on:
+      - mongodb
+      - kafka
+    ports:
+      - "3001:3001"
+
+  vote-service:
+    build:
+      context: .
+      dockerfile: ./apps/vote-service/Dockerfile
+    depends_on:
+      - mongodb
+      - kafka
+    ports:
+      - "3002:3002"
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+    restart: on-failure
+    depends_on:
+      - mongodb
+      - kafka
+      - vote-service
+      - campaign-service
+    ports:
+      - "5000:5000"
+
+  ui:
+    build:
+      context: .
+      dockerfile: ./ui/Dockerfile
+    depends_on:
+      - api-gateway
+    ports:
+      - "8000:8000"

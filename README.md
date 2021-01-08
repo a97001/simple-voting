@@ -1,73 +1,101 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Simple Voting
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Scenario
+Set up an online voting system for HK01 readers to express their opinions for news topics
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Functional Requirements:
+1. API interface for voting.
+2. API for displaying the result.
+3. API for displaying the current count for each candidate.
+4. Each voting campaign with a start and end time, the campaign will not accept new vote after the end time.
+5. Able to host more than one voting campaign.
+6. A valid `HKID` no. is required for the voting. An HKID no. allow voting `ONLY ONCE` candidate for each campaign.
+7. A list to display all voting campaign
+i. Display campaigns within start/end time first and order bytotal no. of votes.
+ii. Display most recent ended campaign afterward
 
-## Description
+### Non-Functional Requirements:
+1. Code style and deliverable should be production ready, easy to read and maintainable
+2. A clear setup document.
+3. Source code hosts in public GitHub repository.
+4. Unit test cases to cover critical paths.
+5. API documentation with swagger.
+6. High traffic and scalable architecture for both read and write architecture and display the current vote count as real-time as possible
+7. Comply with HK privacy regulation
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## Implementation
 
+### Assumption & limitation
+1. User will not use someone else HKID to impersonate others.
+2. The system only provides nearly real-time result of the campaign during voting period since the architecture uses eventual consistency model.
+
+### System Design & Infrastructure
+1. Mongodb
+* votes collection
+```ts
+{
+    _id: ObjectId;
+    campaignId: ObjectId;
+    candidateId: ObjectId;
+    createdAt: Date;
+    hkid: string;
+}
+```
+`* Addtional uniqe index: { campaignId: 1, hkid: 1 }`
+
+* campaigns collection
+```ts
+{
+    _id: ObjectId;
+    title: string;
+    startAt: Date;
+    endAt: Date;
+    createdAt: Date;
+    updatedAt: Date;
+    candidates: [{
+        _id: ObjectId;
+        name: string;
+        voteCnt: number;
+    }];
+    totalVoteCnt: number;
+}
+```
+`* Addtional index: { endAt: -1 , totalVoteCnt: -1 }`
+
+2. Infrastructure
+
+![infra-chart](./img/tinyurl-design-system-design.png?raw=true)
+
+### Tech stack
+1. Backend Services: Nodejs + NestJS
+2. Front End: Gatsby + React
+3. Database and Queue: MongoDB + Kafka
+4. Docker + Docker Compose 
+
+## Setup Menu
+### Prerequisites
+1. docker
+2. docker-compose
+3. git
+4. port 8000 for web UI and port 5000 for API gateway
+
+### installation guide
+Clone the project
 ```bash
-$ npm install
+git clone https://github.com/a97001/simple-voting.git
+
+cd simple-voting
+
+docker-compose -f docker-compose.yml -f docker-compose.prod.yaml up -d
 ```
 
-## Running the app
+Open [http://localhost:8000](http://localhost:8000) with browser after installation completed.
 
-```bash
-# development
-$ npm run start
+### API Documentation
+Visit [http://localhost:5000/api/](http://localhost:5000/api/) to access `Swagger API` document for open API format.
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+### Future Works
+1. Redis: find in cache first to increse get short link performance
+2. Zookeeper: Generating global unique ID in distributed cluster, this may increase writing performance
+3. Add link counter for further analysis

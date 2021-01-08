@@ -11,9 +11,14 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
   providers: [
     {
       provide: 'CAMPAIGN_SERVICE',
-      useFactory: () => {
-        // const mathSvcOptions = configService.get();
-        return ClientProxyFactory.create({ transport: Transport.TCP, options: { port: 3001 } });
+      useFactory: (configService: ConfigService) => {
+        return ClientProxyFactory.create({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get('ENV_CAMPAIGN_SERVICE_HOST'),
+            port: parseInt(configService.get('ENV_CAMPAIGN_SERVICE_PORT'))
+          }
+        });
       },
       inject: [ConfigService]
     },
