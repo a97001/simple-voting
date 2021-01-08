@@ -21,11 +21,6 @@ export class CampaignsController {
         return this.campaignsService.createCampaign(createCampaignDto);
     }
 
-    // @Put()
-    // async updateCampaign(): Promise<any> {
-    //     return;
-    // }
-
     @Delete(':id')
     @HttpCode(204)
     @ApiResponse({ status: 204, description: 'Delete campaign.' })

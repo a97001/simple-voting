@@ -17,8 +17,6 @@ function IndexPage() {
     }
   }, []);
 
-  // useEffect(() => fetchCampaignData(), []);
-
   async function fetchCampaignData() {
     const result = await axios.get('http://localhost:5000/api/v1/campaigns');
     console.log(result);

@@ -15,32 +15,12 @@ async function bootstrap() {
     },
   );
 
-  // app.use(helmet());
-
-  // app.setGlobalPrefix('api/v1');
-
-  // app.use(
-  //   rateLimit({
-  //     windowMs: 60 * 1000,
-  //     max: 100
-  //   })
-  // );
-
   app.useGlobalPipes(new ValidationPipe({
     skipMissingProperties: true,
     forbidNonWhitelisted: true,
     whitelist: true,
     transform: true
   }));
-
-  // const options = new DocumentBuilder()
-  //   .setTitle('Vote Service')
-  //   .setDescription('The vote service API documentation')
-  //   .setVersion('1.0.0')
-  //   .addTag('votes')
-  //   .build();
-  // const document = SwaggerModule.createDocument(app, options);
-  // SwaggerModule.setup('api', app, document);
 
   app.listen(() => console.log('Vote service is listening'));
 }

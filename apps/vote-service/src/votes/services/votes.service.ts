@@ -1,11 +1,8 @@
-import { Injectable, OnApplicationBootstrap, OnApplicationShutdown } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateVoteDto } from '../dtos/create-vote-dto';
 import { Vote } from '../models/vote';
 import { VotesRepository } from '../repositories/votes.repository';
 import crypto from 'crypto';
-import { ConfigService } from '@nestjs/config';
-
-import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class VotesService {

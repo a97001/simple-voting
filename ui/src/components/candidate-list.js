@@ -14,9 +14,7 @@ const CandidateListComponent = ({ candidates, view }) => {
                 })
             }
         </ol>
-        
     )
-    // return <o1>{candidates}</o1>;
 };
 
 CandidateListComponent.propTypes = {

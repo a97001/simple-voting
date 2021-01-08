@@ -12,7 +12,6 @@ const CandidateInputItemComponent = ({idx, value, cb }) => {
         </div>
 
     )
-    // return <o1>{candidates}</o1>;
 };
 
 CandidateInputItemComponent.propTypes = {
