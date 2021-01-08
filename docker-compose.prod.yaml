@@ -7,8 +7,8 @@ services:
     depends_on:
       - mongodb
       - kafka
-    ports:
-      - "3001:3001"
+    # ports:
+    #   - "3001:3001"
 
   vote-service:
     build:
@@ -17,8 +17,8 @@ services:
     depends_on:
       - mongodb
       - kafka
-    ports:
-      - "3002:3002"
+    # ports:
+    #   - "3002:3002"
 
   api-gateway:
     build:
