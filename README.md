@@ -106,3 +106,4 @@ Visit [http://localhost:5000/api/](http://localhost:5000/api/) to access `Swagge
 
 ### Future Works
 1. Complete the unit test since time is limited.
+2. Complete data validation on front end.
