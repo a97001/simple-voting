@@ -12,4 +12,7 @@ COPY . /app/
 
 CMD ["npm", "run", "api-gateway"]
 
+HEALTHCHECK --interval=5s --timeout=1s \
+  CMD curl -f http://localhost:5000/api || exit 1
+
 EXPOSE 5000

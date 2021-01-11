@@ -4,7 +4,7 @@
         "connector.class": "com.mongodb.kafka.connect.MongoSourceConnector",
         "connection.uri": "mongodb://mongodb:27017",
         "topic.prefix": "mongo",
-        "database": "development",
+        "database": "vote",
         "collection": "votes",
         "copy.existing": false,
         "poll.await.time.ms": 1000,

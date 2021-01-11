@@ -81,6 +81,7 @@ ii. Display most recent ended campaign afterward
 4. ports
     * `8000` for web UI
     * `5000` for API gateway
+    * `27017` for MongoDB
 
 ### Installation guide
 ```bash

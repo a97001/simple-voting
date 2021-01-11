@@ -24,7 +24,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/api-gateway/Dockerfile
-    restart: on-failure
+    restart: unless-stopped
     depends_on:
       - mongodb
       - kafka
@@ -40,4 +40,4 @@ services:
     depends_on:
       - api-gateway
     ports:
-      - "8000:8000"
+      - "8000:80"
