@@ -8,6 +8,6 @@ COPY ./ui /app/
 
 RUN npm ci
 
-CMD ["npm", "run", "develop"]
+CMD ["npm", "run", "serve"]
 
 EXPOSE 8000

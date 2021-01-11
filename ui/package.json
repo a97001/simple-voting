@@ -39,10 +39,10 @@
     "fix:prettier": "prettier --write \"**/*.{css,js,jsx,json,md}\"",
     "fix": "npm run fix:lint && npm run fix:prettier",
     "build": "gatsby build",
-    "develop": "gatsby develop -H ui",
+    "develop": "gatsby develop",
     "dev": "npm run develop",
     "start": "npm run develop",
-    "serve": "gatsby serve",
+    "serve": "gatsby clean && npm run build && gatsby serve -p 8000 -H 0.0.0.0",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
