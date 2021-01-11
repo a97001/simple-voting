@@ -7,7 +7,7 @@
         "database": "vote",
         "collection": "votes",
         "copy.existing": false,
-        "poll.await.time.ms": 1000,
+        "poll.await.time.ms": 300,
         "publish.full.document.only": true,
         "pipeline": "[{\"$match\":{\"operationType\":{\"$in\":[\"insert\",\"update\",\"replace\"]}}},{\"$project\":{\"_id\":1,\"fullDocument\":1,\"ns\":1,\"documentKey\":1}}]"
     }
