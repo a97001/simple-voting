@@ -16,7 +16,7 @@ import { parse as envParse } from 'dotenv';
     TypegooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: `mongodb://${configService.get<string>('ENV_MONGODB_HOST')}/${configService.get<string>('ENV_MONGODB_DB')}`,
+        uri: `mongodb://${configService.get<string>('ENV_MONGODB_HOST')}/campaign`,
         user: configService.get<string>('ENV_MONGODB_USERNAME'),
         pass: configService.get<string>('ENV_MONGODB_PASSWORD'),
         authSource: configService.get<string>('ENV_MONGODB_AUTH_SOURCE'),

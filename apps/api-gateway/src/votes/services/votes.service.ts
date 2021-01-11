@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Inject, Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateVoteDto } from 'apps/vote-service/src/votes/dtos/create-vote-dto';
 import { VoteDto } from 'apps/vote-service/src/votes/dtos/vote-dto';
@@ -6,7 +6,7 @@ import { CampaignsService } from '../../campaigns/services/campaigns.service';
 import { ObjectId } from 'mongodb';
 
 @Injectable()
-export class VotesService {
+export class VotesService implements OnApplicationBootstrap {
     constructor(
         @Inject('VOTE_SERVICE') private client: ClientProxy,
         private readonly campaignsService: CampaignsService
@@ -23,5 +23,9 @@ export class VotesService {
             }
         }
         throw new BadRequestException(["Invalid campaignId or candidateId"]);
+    }
+
+    async onApplicationBootstrap() {
+        await this.client.connect();
     }
 }

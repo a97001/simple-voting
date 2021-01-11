@@ -81,6 +81,7 @@ ii. Display most recent ended campaign afterward
 4. ports
     * `8000` for web UI
     * `5000` for API gateway
+    * `27017` for MongoDB
 
 ### Installation guide
 ```bash
@@ -91,7 +92,7 @@ git clone https://github.com/a97001/simple-voting.git
 cd simple-voting
 
 # Start all services
-docker-compose -f docker-compose.yml -f docker-compose.prod.yaml up -d
+docker-compose -f docker-compose.yml -f docker-compose.prod.yaml up -d --build
 ```
 
 Open [http://localhost:8000](http://localhost:8000) with browser after installation completed.

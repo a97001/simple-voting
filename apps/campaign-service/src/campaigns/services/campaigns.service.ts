@@ -50,7 +50,7 @@ export class CampaignsService implements OnApplicationBootstrap {
         });
         await new Promise((resolve) => {
             client.createTopic({
-                topic: 'mongo.development.votes',
+                topic: 'mongo.vote.votes',
                 num_partitions: 1,
                 replication_factor: 1
             }, () => {
@@ -66,7 +66,7 @@ export class CampaignsService implements OnApplicationBootstrap {
             'group.id': 'VOTE_SERVICE',
             'metadata.broker.list': this.configService.get('ENV_KAFKA_BROKERS')
         }, {}, {
-            topics: ['mongo.development.votes']
+            topics: ['mongo.vote.votes']
         });
 
         this.voteStream.on('data', async (message) => {
