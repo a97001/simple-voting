@@ -92,7 +92,7 @@ git clone https://github.com/a97001/simple-voting.git
 cd simple-voting
 
 # Start all services
-docker-compose -f docker-compose.yml -f docker-compose.prod.yaml up -d
+docker-compose -f docker-compose.yml -f docker-compose.prod.yaml up -d --build
 ```
 
 Open [http://localhost:8000](http://localhost:8000) with browser after installation completed.
