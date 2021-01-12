@@ -4,6 +4,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { CampaignDto } from 'apps/campaign-service/src/campaigns/dtos/campaign-dto';
 import { CampaignListDto } from 'apps/campaign-service/src/campaigns/dtos/campaign-list-dto';
 import { CreateCampaignDto } from 'apps/campaign-service/src/campaigns/dtos/create-campaign-dto';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class CampaignsService implements OnApplicationBootstrap {
@@ -20,7 +21,7 @@ export class CampaignsService implements OnApplicationBootstrap {
     }
 
     public async getCampaign(id: ObjectId): Promise<CampaignDto> {
-        return this.client.send<CampaignDto>({ cmd: 'getCampaign' }, id).toPromise();
+        return plainToClass(CampaignDto, await this.client.send<CampaignDto>({ cmd: 'getCampaign' }, id).toPromise());
     }
 
     public async getCampaignList(): Promise<CampaignListDto> {

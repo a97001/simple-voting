@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { prop } from '@typegoose/typegoose';
+import { index, prop } from '@typegoose/typegoose';
 import { PaginatedModel, PaginateMethod } from "./paginated-model";
 
 class CampaignCandidate {
@@ -12,6 +12,7 @@ class CampaignCandidate {
     voteCnt: number = 0;
 }
 
+@index({ endAt: -1 , totalVoteCnt: -1 })
 export class Campaign extends PaginatedModel {
     _id: ObjectId;
 
